@@ -1,0 +1,18 @@
+import numpy as np
+from numpy.random import default_rng
+# Генерируем n точек на координатной плоскости 
+rng = default_rng()
+n = input("Введите количество координат: ")
+n = int(n)
+x_y_array = rng.integers(low=-100, high=100, size=(n, 2))
+print(x_y_array)
+
+# Находим расстояние между началом координат и точками массива 
+distances = np.sqrt(x_y_array[:, 0] * x_y_array[:, 0] + x_y_array[:, 1] * x_y_array[:, 1])
+# Находим среднее, минимальное и максимальное расстояния 
+dist_mean = np.mean(distances)
+dist_max = np.max(distances)
+dist_min = np.min(distances)
+print("Минимальное расстояние: ", dist_min)
+print("Максимальное расстояние: ", dist_max)
+print("Среднее расстояние: ", dist_mean)
