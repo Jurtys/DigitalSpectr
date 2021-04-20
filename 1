@@ -1,20 +1,51 @@
 import numpy as np
 from numpy.random import default_rng
+import math
+import pprint
 
-# Генерируем n точек на координатной плоскости 
+# Генерируем n точек на координатной плоскости
 rng = default_rng()
 n = input("Введите количество координат: ")
 n = int(n)
 x_y_array = rng.integers(low=-100, high=100, size=(n, 2))
-print(x_y_array)
+# print(x_y_array)
 
-# Находим расстояние между началом координат и точками массива 
+# L = sorted(x_y_array, key=lambda k: (k[0], k[1]))
+# L[-2], L[-1] = L[-1], L[-2]
+# import pprint
+# pprint.pprint(L)
+
+# Расположим точки в порядке обхода против часовой стрелки
+mx = sum(x[0] for x in x_y_array) / len(x_y_array)
+my = sum(x[1] for x in x_y_array) / len(x_y_array)
+
+
+def algo(x):
+    return (-math.atan2(x[0] - mx, x[1] - my) + 2 * math.pi) % (2 * math.pi)
+
+
+r = sorted(x_y_array, key=algo)
+r.insert(0, r.pop())
+# r1 = r[0]
+# r[0] = r[n - 1]
+# r[n - 1] = r1
+
+pprint.pprint(r)
+
+# x_y_array.sort(key=lambda student: student[0])
+# arr = sorted(x_y_array, key=lambda student: student[0])
+# print(arr)
+
+# Находим расстояние между началом координат и точками массива
 distances = np.sqrt(x_y_array[:, 0] * x_y_array[:, 0] + x_y_array[:, 1] * x_y_array[:, 1])
 
-# Находим среднее, минимальное и максимальное расстояния 
+# Находим среднее, минимальное и максимальное расстояния
 dist_mean = np.mean(distances)
 dist_max = np.max(distances)
 dist_min = np.min(distances)
 print("Минимальное расстояние: ", dist_min)
 print("Максимальное расстояние: ", dist_max)
 print("Среднее расстояние: ", dist_mean)
+
+# random_integer_array = numpy.random.random_integers(1, 10, size=(3, 2))
+# print("2-мерный массив случайных целых чисел \n", random_integer_array)
